@@ -4,12 +4,12 @@ class IngressoService:
 
     def getAll(dbObject):
         jsonArray = []
-        for ingresso in dbObject.find({}, {'_id': 0}).sort("id"):
+        for ingresso in dbObject.find({}, {'_id': 0}).sort("id_ingresso"):
             jsonArray.append(ingresso) 
         return jsonify(jsonArray)
 
-    def getOne(dbObject, id):
-        ingresso = dbObject.find_one({"id": id}, {"_id": 0})
+    def getOne(dbObject, id_ingresso):
+        ingresso = dbObject.find_one({"id_ingresso": id_ingresso}, {"_id": 0})
         if ingresso:
             return jsonify(ingresso)
         else:
@@ -20,12 +20,12 @@ class IngressoService:
         new_ingresso = dbObject.find_one({"_id": ingresso_id}, {"_id": 0})
         return jsonify(new_ingresso)
     
-    def update(dbObject, request, id):
+    def update(dbObject, request, id_ingresso):
         new_ingresso = {"$set": request.json}
-        dbObject.update_one({"id": id}, new_ingresso)
-        ingresso = dbObject.find_one({"id": id}, {"_id": 0})
+        dbObject.update_one({"id_ingresso": id_ingresso}, new_ingresso)
+        ingresso = dbObject.find_one({"id_ingresso": id_ingresso}, {"_id": 0})
         return jsonify(ingresso)
 
-    def delete(dbObject, id):
-        dbObject.delete_one({"id": id})
+    def delete(dbObject, id_ingresso):
+        dbObject.delete_one({"id_ingresso": id_ingresso})
         return jsonify({"result": "Deleted"})
